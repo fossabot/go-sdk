@@ -6,7 +6,7 @@ import (
 
 // Task represents a task
 type Task struct {
-	Input          DatasetLink          `json:"input"`
+	Input          *DatasetLink         `json:"input"`
 	TaskDefinition *POLYMORPH.Polymorph `json:"taskDefinition"`
 	Status         *POLYMORPH.Polymorph `json:"status"`
 }

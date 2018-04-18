@@ -10,5 +10,5 @@ type Condition struct {
 	Condition      string               `json:"condition"`
 	TaskDefinition *POLYMORPH.Polymorph `json:"taskDefinition"`
 	Action         string               `json:"action,omitempty"`
-	Source         DatasetLink          `json:"source"`
+	Source         *DatasetLink         `json:"source"`
 }

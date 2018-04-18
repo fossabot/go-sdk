@@ -13,7 +13,7 @@ type Condition struct {
 	Condition      string               `json:"condition"`
 	TaskDefinition *POLYMORPH.Polymorph `json:"taskDefinition"`
 	Action         string               `json:"action,omitempty"`
-	Source         DatasetLink          `json:"source"`
+	Source         *DatasetLink         `json:"source"`
 }
 ```
 
@@ -34,7 +34,7 @@ DatasetLink represents a dataset link with path
 
 ```go
 type Task struct {
-	Input          DatasetLink          `json:"input"`
+	Input          *DatasetLink         `json:"input"`
 	TaskDefinition *POLYMORPH.Polymorph `json:"taskDefinition"`
 	Status         *POLYMORPH.Polymorph `json:"status"`
 }
@@ -46,12 +46,20 @@ Task represents a task
 
 ```go
 type TaskDefinition struct {
-	Result struct {
-		Action      string      `json:"action,omitempty"`
-		Destination DatasetLink `json:"destination"`
-	} `json:"result"`
-	Conditions []Condition `json:"conditions,omitempty"`
+	Result     *TaskDefinitionResult `json:"result"`
+	Conditions []Condition           `json:"conditions,omitempty"`
 }
 ```
 
 TaskDefinition represents a task definition
+
+#### type TaskDefinitionResult
+
+```go
+type TaskDefinitionResult struct {
+	Action      string       `json:"action,omitempty"`
+	Destination *DatasetLink `json:"destination"`
+}
+```
+
+TaskDefinitionResult represents a task definition result

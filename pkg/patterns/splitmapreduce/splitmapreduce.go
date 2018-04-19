@@ -72,11 +72,10 @@ func (j *Job) Create() error {
 // Run will enqueue the task in computes
 // Create must be executed prior to calling Run
 func (j *Job) Run() error {
-	something, err := tasks.Enqueue(j.HTTPAPIURL, j.SplitTaskCID)
+	err := tasks.Enqueue(j.HTTPAPIURL, j.SplitTaskCID)
 	if err != nil {
 		return err
 	}
-	fmt.Println(something)
 	return nil
 }
 

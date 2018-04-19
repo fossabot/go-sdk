@@ -2,7 +2,6 @@ package datasets
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -17,9 +16,15 @@ func Create(computesURL *url.URL) (string, error) {
 		Timeout: time.Second * 10,
 	}
 	uuid := UUID.New().String()
-	path := fmt.Sprintf("%s/v1/datasets?uuid=%s", computesURL.String(), uuid)
 
-	response, err := netClient.Post(path, "application/json", nil)
+	query := url.Values{}
+	query.Add("uuid", uuid)
+	datasetURL := *computesURL
+	datasetURL.Path = "/v1/datasets"
+	datasetURL.RawQuery = query.Encode()
+
+	debug("Post %v", datasetURL.String())
+	response, err := netClient.Post(datasetURL.String(), "application/json", nil)
 	if err != nil {
 		return "", err
 	}
@@ -29,6 +34,7 @@ func Create(computesURL *url.URL) (string, error) {
 	if err != nil {
 		return "", err
 	}
+	debug("Response Post %v '%v'", datasetURL.String(), string(b))
 
 	var msg string
 	err = json.Unmarshal(b, &msg)

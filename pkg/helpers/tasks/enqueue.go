@@ -13,8 +13,11 @@ func Enqueue(computesURL *url.URL, cid string) error {
 	var netClient = &http.Client{
 		Timeout: time.Second * 10,
 	}
-	path := fmt.Sprintf("%s/v1/tasks/%s", computesURL.String(), cid)
-	request, err := http.NewRequest("PUT", path, nil)
+	taskURL := *computesURL
+	taskURL.Path = fmt.Sprintf("/v1/tasks/%s", cid)
+
+	debug("Put %v", taskURL.String())
+	request, err := http.NewRequest("PUT", taskURL.String(), nil)
 	if err != nil {
 		return err
 	}
@@ -23,11 +26,12 @@ func Enqueue(computesURL *url.URL, cid string) error {
 		return err
 	}
 
-	_, err = ioutil.ReadAll(response.Body)
+	b, err := ioutil.ReadAll(response.Body)
 	defer response.Body.Close()
 	if err != nil {
 		return err
 	}
+	debug("Response Put %v '%v'", taskURL.String(), string(b))
 
 	return nil
 }

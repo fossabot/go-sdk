@@ -4,6 +4,7 @@ package types
 type TaskStatus struct {
 	Events      *TaskEvent   `json:"taskEvents,omitempty"`
 	TaskManager *TaskManager `json:"taskManager,omitempty"`
+	TaskRunner  *TaskRunner  `json:"taskRunner,omitempty"`
 	TaskSet     *TaskSet     `json:"taskSet,omitempty"`
 	UUID        string       `json:"uuid"`
 }
@@ -26,8 +27,14 @@ type TaskSet struct {
 	Completed *[]TaskEventEntry `json:"completed,omitempty"`
 }
 
+// TaskRunner is a list of events from the runner
+type TaskRunner struct {
+	Errors *[]TaskEventEntry `json:"errors,omitempty"`
+}
+
 // TaskEventEntry contains the hostname and timestamp
 type TaskEventEntry struct {
+	Message   string `json:"message"`
 	Hostname  string `json:"hostname"`
 	Timestamp string `json:"timestamp"`
 }

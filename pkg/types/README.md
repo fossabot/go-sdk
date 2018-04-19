@@ -1,6 +1,6 @@
 # types
 --
-    import "github.com/computes/go-sdk/types"
+    import "github.com/computes/go-sdk/pkg/types"
 
 
 ## Usage
@@ -30,6 +30,17 @@ type DatasetLink struct {
 
 DatasetLink represents a dataset link with path
 
+#### type Runner
+
+```go
+type Runner struct {
+	Metadata json.RawMessage `json:"metadata"`
+	Type     string          `json:"type"`
+}
+```
+
+Runner represents how a task should run
+
 #### type Task
 
 ```go
@@ -46,8 +57,9 @@ Task represents a task
 
 ```go
 type TaskDefinition struct {
-	Result     *TaskDefinitionResult `json:"result"`
 	Conditions []Condition           `json:"conditions,omitempty"`
+	Result     *TaskDefinitionResult `json:"result"`
+	Runner     *Runner               `json:"runner"`
 }
 ```
 

@@ -1,7 +1,6 @@
 package splitmapreduce
 
 import (
-	"fmt"
 	"net/url"
 
 	POLYMORPH "github.com/computes/go-ipld-polymorph"

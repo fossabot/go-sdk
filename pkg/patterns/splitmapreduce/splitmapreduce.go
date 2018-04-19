@@ -8,6 +8,7 @@ import (
 	POLYMORPH "github.com/computes/go-ipld-polymorph"
 
 	"github.com/computes/go-sdk/pkg/helpers/datasets"
+	"github.com/computes/go-sdk/pkg/helpers/tasks"
 	"github.com/computes/go-sdk/pkg/types"
 )
 
@@ -66,12 +67,17 @@ func (j *Job) Create() error {
 	if err != nil {
 		return err
 	}
-	str, err := json.Marshal(j.SplitTask)
+	return nil
+}
+
+// Run will enqueue the task in computes
+// Create must be executed prior to calling Run
+func (j *Job) Run() error {
+	something, err := tasks.Enqueue(j.SplitTaskCID)
 	if err != nil {
 		return err
 	}
-	fmt.Println(string(str))
-	return nil
+	fmt.Println(something)
 }
 
 func (j *Job) createResult() error {

@@ -1,12 +1,10 @@
 package types
 
-import "encoding/json"
-
 // Dataset is the status of a given task
 type Dataset struct {
-	Events *TaskEvent      `json:"taskEvents,omitempty"`
-	UUID   string          `json:"uuid"`
-	X      json.RawMessage `json:"-,omitempty"`
+	Events *TaskEvent             `json:"taskEvents,omitempty"`
+	UUID   string                 `json:"uuid"`
+	X      map[string]interface{} `json:"-,omitempty"`
 }
 
 // TaskEvent is a list of tasks

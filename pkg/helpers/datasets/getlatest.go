@@ -41,3 +41,34 @@ func GetLatest(computesURL *url.URL, cid string) (*types.Dataset, error) {
 
 	return &msg, nil
 }
+
+// GetLatestRaw will return the latest version of the dataset as a json.RawMessage
+func GetLatestRaw(computesURL *url.URL, cid string) (json.RawMessage, error) {
+	var netClient = &http.Client{
+		Timeout: time.Second * 10,
+	}
+
+	datasetURL := *computesURL
+	datasetURL.Path = fmt.Sprintf("/v1/datasets/%s/latest", cid)
+
+	debug("Get %v", datasetURL.String())
+	response, err := netClient.Get(datasetURL.String())
+	if err != nil {
+		return nil, err
+	}
+
+	b, err := ioutil.ReadAll(response.Body)
+	defer response.Body.Close()
+	if err != nil {
+		return nil, err
+	}
+	debug("Response Get %v '%v'", datasetURL.String(), string(b))
+
+	var msg json.RawMessage
+	err = msg.UnmarshalJSON(b)
+	if err != nil {
+		return nil, err
+	}
+
+	return msg, nil
+}

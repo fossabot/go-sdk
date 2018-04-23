@@ -34,7 +34,7 @@ func (j *Job) makeMapTaskDefinition() error {
 				Path:    "map/results",
 			},
 		},
-		Conditions: &types.Conditions{
+		Conditions: types.Conditions{
 			&types.Condition{
 				Name: "Create a Reduce Task",
 				Condition: fmt.Sprintf(

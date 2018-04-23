@@ -69,7 +69,7 @@ func (j *Job) makeSplitTaskDefinition() error {
 				Path:    "split/results",
 			},
 		},
-		Conditions: &types.Conditions{
+		Conditions: types.Conditions{
 			&types.Condition{
 				Name: "Create Split Tasks",
 				Condition: fmt.Sprintf(

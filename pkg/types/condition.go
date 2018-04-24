@@ -12,6 +12,3 @@ type Condition struct {
 	Action         string               `json:"action,omitempty"`
 	Source         *DatasetLink         `json:"source"`
 }
-
-// Conditions represents a set of conditions
-type Conditions []*Condition

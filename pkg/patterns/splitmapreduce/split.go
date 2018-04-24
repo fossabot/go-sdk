@@ -3,6 +3,8 @@ package splitmapreduce
 import (
 	"fmt"
 
+	POLYMORPH "github.com/computes/go-ipld-polymorph"
+
 	"github.com/computes/go-sdk/pkg/helpers/datasets"
 	"github.com/computes/go-sdk/pkg/types"
 )
@@ -60,32 +62,42 @@ func (j *Job) createSplitTaskDefinition() error {
 }
 
 func (j *Job) makeSplitTaskDefinition() error {
+	runner, err := j.createPolymorph(j.SplitRunner)
+	if err != nil {
+		return err
+	}
+	condition, err := j.createPolymorph(&types.Condition{
+		Name: "Create Split Tasks",
+		Condition: fmt.Sprintf(
+			"exist(dataset(hpcp('%v/split/results'))) && len(dataset(hpcp('%v/map/results'))) < len(dataset(hpcp('%v/split/results')))",
+			j.ResultCID,
+			j.ResultCID,
+			j.ResultCID,
+		),
+		TaskDefinition: j.MapTaskDefinitionPoly,
+		Action:         "map",
+		Source: &types.DatasetLink{
+			Dataset: j.Result,
+			Path:    "split/results",
+		},
+	})
+	if err != nil {
+		return err
+	}
+	result, err := j.createPolymorph(&types.TaskDefinitionResult{
+		Action: "set",
+		Destination: &types.DatasetLink{
+			Dataset: j.Result,
+			Path:    "split/results",
+		},
+	})
+	if err != nil {
+		return err
+	}
 	taskDefinition := &types.TaskDefinition{
-		Runner: j.SplitRunner,
-		Result: &types.TaskDefinitionResult{
-			Action: "set",
-			Destination: &types.DatasetLink{
-				Dataset: j.Result,
-				Path:    "split/results",
-			},
-		},
-		Conditions: types.Conditions{
-			&types.Condition{
-				Name: "Create Split Tasks",
-				Condition: fmt.Sprintf(
-					"exist(dataset(hpcp('%v/split/results'))) && len(dataset(hpcp('%v/map/results'))) < len(dataset(hpcp('%v/split/results')))",
-					j.ResultCID,
-					j.ResultCID,
-					j.ResultCID,
-				),
-				TaskDefinition: j.MapTaskDefinitionPoly,
-				Action:         "map",
-				Source: &types.DatasetLink{
-					Dataset: j.Result,
-					Path:    "split/results",
-				},
-			},
-		},
+		Runner:     runner,
+		Result:     result,
+		Conditions: []*POLYMORPH.Polymorph{condition},
 	}
 
 	j.SplitTaskDefinition = taskDefinition

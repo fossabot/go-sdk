@@ -23,15 +23,23 @@ func (j *Job) createReduceTaskDefinition() error {
 }
 
 func (j *Job) makeReduceTaskDefinition() error {
-	taskDefinition := &types.TaskDefinition{
-		Runner: j.ReduceRunner,
-		Result: &types.TaskDefinitionResult{
-			Action: "set",
-			Destination: &types.DatasetLink{
-				Dataset: j.Result,
-				Path:    "reduce/results",
-			},
+	runner, err := j.createPolymorph(j.ReduceRunner)
+	if err != nil {
+		return err
+	}
+	result, err := j.createPolymorph(&types.TaskDefinitionResult{
+		Action: "set",
+		Destination: &types.DatasetLink{
+			Dataset: j.Result,
+			Path:    "reduce/results",
 		},
+	})
+	if err != nil {
+		return err
+	}
+	taskDefinition := &types.TaskDefinition{
+		Runner: runner,
+		Result: result,
 	}
 	j.ReduceTaskDefinition = taskDefinition
 	return nil

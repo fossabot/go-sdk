@@ -1,8 +1,12 @@
 package types
 
+import (
+	POLYMORPH "github.com/computes/go-ipld-polymorph"
+)
+
 // TaskDefinition represents a task definition
 type TaskDefinition struct {
-	Conditions Conditions            `json:"conditions,omitempty"`
-	Result     *TaskDefinitionResult `json:"result"`
-	Runner     *Runner               `json:"runner"`
+	Conditions []*POLYMORPH.Polymorph `json:"conditions,omitempty"`
+	Result     *POLYMORPH.Polymorph   `json:"result"`
+	Runner     *POLYMORPH.Polymorph   `json:"runner"`
 }

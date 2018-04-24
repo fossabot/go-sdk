@@ -9,5 +9,5 @@ type Dataset struct {
 
 // TaskEvent is a list of tasks
 type TaskEvent struct {
-	Tasks *[]string `json:"tasks,omitempty"`
+	Tasks []string `json:"tasks,omitempty"`
 }

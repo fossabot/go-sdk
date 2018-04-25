@@ -14,6 +14,7 @@ import (
 type Options struct {
 	IPFSURL      *url.URL
 	HTTPAPIURL   *url.URL
+	UUID         string
 	SplitInput   *POLYMORPH.Polymorph
 	SplitRunner  *types.Runner
 	MapRunner    *types.Runner
@@ -79,10 +80,17 @@ func (j *Job) Run() error {
 }
 
 func (j *Job) createResult() error {
-	hash, err := datasets.Create(j.HTTPAPIURL)
+	var hash string
+	var err error
+	if j.UUID == "" {
+		hash, err = datasets.Create(j.HTTPAPIURL)
+	} else {
+		hash, err = datasets.Find(j.HTTPAPIURL, j.UUID)
+	}
 	if err != nil {
 		return err
 	}
+
 	j.ResultCID = hash
 	result, err := j.createPolymorphFromRef(j.ResultCID)
 	if err != nil {

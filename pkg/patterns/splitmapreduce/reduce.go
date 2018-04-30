@@ -1,6 +1,8 @@
 package splitmapreduce
 
 import (
+	IPFSHELPER "github.com/computes/go-sdk/pkg/helpers/ipfs"
+	POLYHELPER "github.com/computes/go-sdk/pkg/helpers/polymorph"
 	"github.com/computes/go-sdk/pkg/types"
 )
 
@@ -23,11 +25,11 @@ func (j *Job) createReduceTaskDefinition() error {
 }
 
 func (j *Job) makeReduceTaskDefinition() error {
-	runner, err := j.createPolymorph(j.ReduceRunner)
+	runner, err := POLYHELPER.NewFromInterface(*j.IPFSURL, j.ReduceRunner)
 	if err != nil {
 		return err
 	}
-	result, err := j.createPolymorph(&types.TaskDefinitionResult{
+	result, err := POLYHELPER.NewFromInterface(*j.IPFSURL, &types.TaskDefinitionResult{
 		Action: "set",
 		Destination: &types.DatasetLink{
 			Dataset: j.Result,
@@ -46,7 +48,7 @@ func (j *Job) makeReduceTaskDefinition() error {
 }
 
 func (j *Job) storeReduceTaskDefinition() error {
-	cid, err := j.storeIPFS(j.ReduceTaskDefinition)
+	cid, err := IPFSHELPER.StoreInterfaceToDAG(*j.IPFSURL, j.ReduceTaskDefinition)
 	if err != nil {
 		return err
 	}
@@ -56,7 +58,7 @@ func (j *Job) storeReduceTaskDefinition() error {
 }
 
 func (j *Job) makeReduceTaskDefinitionPolymorph() error {
-	p, err := j.createPolymorphFromRef(j.ReduceTaskDefinitionCID)
+	p, err := POLYHELPER.NewFromInterface(*j.IPFSURL, j.ReduceTaskDefinitionCID)
 	if err != nil {
 		return err
 	}

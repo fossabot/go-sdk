@@ -93,7 +93,7 @@ func (j *Job) createResult() error {
 	}
 
 	j.ResultCID = hash
-	result, err := POLYHELPER.NewFromRef(*j.IPFSURL, j.ResultCID)
+	result, err := POLYHELPER.NewFromRef(j.IPFSURL, j.ResultCID)
 	if err != nil {
 		return err
 	}

@@ -30,7 +30,7 @@ func (j *Job) makeSplitTask() error {
 	if err != nil {
 		return err
 	}
-	taskStatusPoly, err := POLYHELPER.NewFromRef(*j.IPFSURL, taskStatusHash)
+	taskStatusPoly, err := POLYHELPER.NewFromRef(j.IPFSURL, taskStatusHash)
 	if err != nil {
 		return err
 	}
@@ -64,11 +64,11 @@ func (j *Job) createSplitTaskDefinition() error {
 }
 
 func (j *Job) makeSplitTaskDefinition() error {
-	runner, err := POLYHELPER.NewFromInterface(*j.IPFSURL, j.SplitRunner)
+	runner, err := POLYHELPER.NewFromInterface(j.IPFSURL, j.SplitRunner)
 	if err != nil {
 		return err
 	}
-	condition, err := POLYHELPER.NewFromInterface(*j.IPFSURL, &types.Condition{
+	condition, err := POLYHELPER.NewFromInterface(j.IPFSURL, &types.Condition{
 		Name: "Create Split Tasks",
 		Condition: fmt.Sprintf(
 			"exist(dataset(hpcp('%v/split/results'))) && len(dataset(hpcp('%v/map/results'))) < len(dataset(hpcp('%v/split/results')))",
@@ -86,7 +86,7 @@ func (j *Job) makeSplitTaskDefinition() error {
 	if err != nil {
 		return err
 	}
-	result, err := POLYHELPER.NewFromInterface(*j.IPFSURL, &types.TaskDefinitionResult{
+	result, err := POLYHELPER.NewFromInterface(j.IPFSURL, &types.TaskDefinitionResult{
 		Action: "set",
 		Destination: &types.DatasetLink{
 			Dataset: j.Result,
@@ -108,7 +108,7 @@ func (j *Job) makeSplitTaskDefinition() error {
 }
 
 func (j *Job) storeSplitTaskDefinition() error {
-	cid, err := IPFSHELPER.StoreInterfaceToDAG(*j.IPFSURL, j.SplitTaskDefinition)
+	cid, err := IPFSHELPER.StoreInterfaceToDAG(j.IPFSURL, j.SplitTaskDefinition)
 	if err != nil {
 		return err
 	}
@@ -118,7 +118,7 @@ func (j *Job) storeSplitTaskDefinition() error {
 }
 
 func (j *Job) makeSplitTaskDefinitionPolymorph() error {
-	p, err := POLYHELPER.NewFromInterface(*j.IPFSURL, j.SplitTaskDefinitionCID)
+	p, err := POLYHELPER.NewFromInterface(j.IPFSURL, j.SplitTaskDefinitionCID)
 	if err != nil {
 		return err
 	}
@@ -128,7 +128,7 @@ func (j *Job) makeSplitTaskDefinitionPolymorph() error {
 }
 
 func (j *Job) storeSplitTask() error {
-	cid, err := IPFSHELPER.StoreInterfaceToDAG(*j.IPFSURL, j.SplitTask)
+	cid, err := IPFSHELPER.StoreInterfaceToDAG(j.IPFSURL, j.SplitTask)
 	if err != nil {
 		return err
 	}

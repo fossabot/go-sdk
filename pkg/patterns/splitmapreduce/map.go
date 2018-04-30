@@ -29,11 +29,11 @@ func (j *Job) createMapTaskDefinition() error {
 }
 
 func (j *Job) makeMapTaskDefinition() error {
-	runner, err := POLYHELPER.NewFromInterface(*j.IPFSURL, j.MapRunner)
+	runner, err := POLYHELPER.NewFromInterface(j.IPFSURL, j.MapRunner)
 	if err != nil {
 		return err
 	}
-	condition, err := POLYHELPER.NewFromInterface(*j.IPFSURL, &types.Condition{
+	condition, err := POLYHELPER.NewFromInterface(j.IPFSURL, &types.Condition{
 		Name: "Create a Reduce Task",
 		Condition: fmt.Sprintf(
 			"len(dataset(hpcp('%v/split/results'))) == len(dataset(hpcp('%v/map/results')))  && !exist(dataset(hpcp('%v/reduce/results')))",
@@ -50,7 +50,7 @@ func (j *Job) makeMapTaskDefinition() error {
 	if err != nil {
 		return err
 	}
-	result, err := POLYHELPER.NewFromInterface(*j.IPFSURL, &types.TaskDefinitionResult{
+	result, err := POLYHELPER.NewFromInterface(j.IPFSURL, &types.TaskDefinitionResult{
 		Action: "append",
 		Destination: &types.DatasetLink{
 			Dataset: j.Result,
@@ -71,7 +71,7 @@ func (j *Job) makeMapTaskDefinition() error {
 }
 
 func (j *Job) storeMapTaskDefinition() error {
-	cid, err := IPFSHELPER.StoreInterfaceToDAG(*j.IPFSURL, j.MapTaskDefinition)
+	cid, err := IPFSHELPER.StoreInterfaceToDAG(j.IPFSURL, j.MapTaskDefinition)
 	if err != nil {
 		return err
 	}
@@ -81,7 +81,7 @@ func (j *Job) storeMapTaskDefinition() error {
 }
 
 func (j *Job) makeMapTaskDefinitionPolymorph() error {
-	p, err := POLYHELPER.NewFromRef(*j.IPFSURL, j.MapTaskDefinitionCID)
+	p, err := POLYHELPER.NewFromRef(j.IPFSURL, j.MapTaskDefinitionCID)
 	if err != nil {
 		return err
 	}

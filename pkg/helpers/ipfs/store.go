@@ -10,7 +10,7 @@ import (
 
 // StoreInterfaceToDAG will store use json.Marshal on the interface and store it
 // to the IPFS Dag
-func StoreInterfaceToDAG(ipfsURL url.URL, data interface{}) (string, error) {
+func StoreInterfaceToDAG(ipfsURL *url.URL, data interface{}) (string, error) {
 	buf, err := json.Marshal(data)
 	if err != nil {
 		return "", err

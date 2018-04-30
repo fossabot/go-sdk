@@ -25,11 +25,11 @@ func (j *Job) createReduceTaskDefinition() error {
 }
 
 func (j *Job) makeReduceTaskDefinition() error {
-	runner, err := POLYHELPER.NewFromInterface(*j.IPFSURL, j.ReduceRunner)
+	runner, err := POLYHELPER.NewFromInterface(j.IPFSURL, j.ReduceRunner)
 	if err != nil {
 		return err
 	}
-	result, err := POLYHELPER.NewFromInterface(*j.IPFSURL, &types.TaskDefinitionResult{
+	result, err := POLYHELPER.NewFromInterface(j.IPFSURL, &types.TaskDefinitionResult{
 		Action: "set",
 		Destination: &types.DatasetLink{
 			Dataset: j.Result,
@@ -48,7 +48,7 @@ func (j *Job) makeReduceTaskDefinition() error {
 }
 
 func (j *Job) storeReduceTaskDefinition() error {
-	cid, err := IPFSHELPER.StoreInterfaceToDAG(*j.IPFSURL, j.ReduceTaskDefinition)
+	cid, err := IPFSHELPER.StoreInterfaceToDAG(j.IPFSURL, j.ReduceTaskDefinition)
 	if err != nil {
 		return err
 	}
@@ -58,7 +58,7 @@ func (j *Job) storeReduceTaskDefinition() error {
 }
 
 func (j *Job) makeReduceTaskDefinitionPolymorph() error {
-	p, err := POLYHELPER.NewFromInterface(*j.IPFSURL, j.ReduceTaskDefinitionCID)
+	p, err := POLYHELPER.NewFromInterface(j.IPFSURL, j.ReduceTaskDefinitionCID)
 	if err != nil {
 		return err
 	}

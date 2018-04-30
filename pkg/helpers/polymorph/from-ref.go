@@ -8,14 +8,14 @@ import (
 )
 
 // NewFromRef will create a new Polymorph that represents an IPLD link
-func NewFromRef(ipfsURL url.URL, hash string) (*POLYMORPH.Polymorph, error) {
+func NewFromRef(ipfsURL *url.URL, hash string) (*POLYMORPH.Polymorph, error) {
 	link := map[string]string{"/": hash}
 	return NewFromInterface(ipfsURL, link)
 }
 
 // NewFromInterface will create a new Polymorph using json.Marshal
 // on the provided interface
-func NewFromInterface(ipfsURL url.URL, data interface{}) (*POLYMORPH.Polymorph, error) {
+func NewFromInterface(ipfsURL *url.URL, data interface{}) (*POLYMORPH.Polymorph, error) {
 	p := POLYMORPH.New(ipfsURL)
 	buf, err := json.Marshal(data)
 	if err != nil {

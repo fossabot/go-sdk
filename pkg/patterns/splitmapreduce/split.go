@@ -7,7 +7,6 @@ import (
 
 	"github.com/computes/go-sdk/pkg/helpers/datasets"
 	IPFSHELPER "github.com/computes/go-sdk/pkg/helpers/ipfs"
-	POLYHELPER "github.com/computes/go-sdk/pkg/helpers/polymorph"
 	"github.com/computes/go-sdk/pkg/types"
 )
 
@@ -30,10 +29,7 @@ func (j *Job) makeSplitTask() error {
 	if err != nil {
 		return err
 	}
-	taskStatusPoly, err := POLYHELPER.NewFromRef(j.IPFSURL, taskStatusHash)
-	if err != nil {
-		return err
-	}
+	taskStatusPoly := POLYMORPH.FromRef(j.IPFSURL, taskStatusHash)
 
 	task := &types.Task{
 		Input:          &types.DatasetLink{Dataset: j.SplitInput},
@@ -64,11 +60,11 @@ func (j *Job) createSplitTaskDefinition() error {
 }
 
 func (j *Job) makeSplitTaskDefinition() error {
-	runner, err := POLYHELPER.NewFromInterface(j.IPFSURL, j.SplitRunner)
+	runner, err := POLYMORPH.FromInterface(j.IPFSURL, j.SplitRunner)
 	if err != nil {
 		return err
 	}
-	condition, err := POLYHELPER.NewFromInterface(j.IPFSURL, &types.Condition{
+	condition, err := POLYMORPH.FromInterface(j.IPFSURL, &types.Condition{
 		Name: "Create Split Tasks",
 		Condition: fmt.Sprintf(
 			"exist(dataset(hpcp('%v/split/results'))) && len(dataset(hpcp('%v/map/results'))) < len(dataset(hpcp('%v/split/results')))",
@@ -86,7 +82,7 @@ func (j *Job) makeSplitTaskDefinition() error {
 	if err != nil {
 		return err
 	}
-	result, err := POLYHELPER.NewFromInterface(j.IPFSURL, &types.TaskDefinitionResult{
+	result, err := POLYMORPH.FromInterface(j.IPFSURL, &types.TaskDefinitionResult{
 		Action: "set",
 		Destination: &types.DatasetLink{
 			Dataset: j.Result,
@@ -118,7 +114,7 @@ func (j *Job) storeSplitTaskDefinition() error {
 }
 
 func (j *Job) makeSplitTaskDefinitionPolymorph() error {
-	p, err := POLYHELPER.NewFromInterface(j.IPFSURL, j.SplitTaskDefinitionCID)
+	p, err := POLYMORPH.FromInterface(j.IPFSURL, j.SplitTaskDefinitionCID)
 	if err != nil {
 		return err
 	}

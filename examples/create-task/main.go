@@ -6,9 +6,9 @@ import (
 	"log"
 	"net/url"
 
+	POLYMORPH "github.com/computes/go-ipld-polymorph"
 	"github.com/computes/go-sdk/pkg/helpers/datasets"
 	IPFSHELPER "github.com/computes/go-sdk/pkg/helpers/ipfs"
-	POLYHELPER "github.com/computes/go-sdk/pkg/helpers/polymorph"
 	"github.com/computes/go-sdk/pkg/helpers/tasks"
 	"github.com/computes/go-sdk/pkg/types"
 )
@@ -27,7 +27,7 @@ func main() {
 	}
 
 	// Create POLYMORPH to represent the input for the task
-	input, err := POLYHELPER.NewFromInterface(ipfsURL, 2)
+	input, err := POLYMORPH.FromInterface(ipfsURL, 2)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -42,7 +42,7 @@ func main() {
 		Type:     "docker-json-runner",
 	}
 
-	runner, err := POLYHELPER.NewFromInterface(ipfsURL, taskRunner)
+	runner, err := POLYMORPH.FromInterface(ipfsURL, taskRunner)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -53,10 +53,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	status, err := POLYHELPER.NewFromRef(ipfsURL, statusHash)
-	if err != nil {
-		log.Fatal(err)
-	}
+	status := POLYMORPH.FromRef(ipfsURL, statusHash)
 
 	// Prepare Results
 	resultsHash, err := datasets.Create(computesURL)
@@ -64,12 +61,9 @@ func main() {
 		log.Fatal(err)
 	}
 
-	results, err := POLYHELPER.NewFromRef(ipfsURL, resultsHash)
-	if err != nil {
-		log.Fatal(err)
-	}
+	results := POLYMORPH.FromRef(ipfsURL, resultsHash)
 
-	result, err := POLYHELPER.NewFromInterface(ipfsURL, &types.TaskDefinitionResult{
+	result, err := POLYMORPH.FromInterface(ipfsURL, &types.TaskDefinitionResult{
 		Action: "set",
 		Destination: &types.DatasetLink{
 			Dataset: results,
@@ -86,7 +80,7 @@ func main() {
 		Result: result,
 	}
 
-	definition, err := POLYHELPER.NewFromInterface(ipfsURL, taskDefinition)
+	definition, err := POLYMORPH.FromInterface(ipfsURL, taskDefinition)
 	if err != nil {
 		log.Fatal(err)
 	}

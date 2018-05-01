@@ -6,7 +6,6 @@ import (
 	POLYMORPH "github.com/computes/go-ipld-polymorph"
 
 	"github.com/computes/go-sdk/pkg/helpers/datasets"
-	POLYHELPER "github.com/computes/go-sdk/pkg/helpers/polymorph"
 	"github.com/computes/go-sdk/pkg/helpers/tasks"
 	"github.com/computes/go-sdk/pkg/types"
 )
@@ -93,10 +92,8 @@ func (j *Job) createResult() error {
 	}
 
 	j.ResultCID = hash
-	result, err := POLYHELPER.NewFromRef(j.IPFSURL, j.ResultCID)
-	if err != nil {
-		return err
-	}
+	result := POLYMORPH.FromRef(j.IPFSURL, j.ResultCID)
+
 	j.Result = result
 	return nil
 }

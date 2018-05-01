@@ -10,15 +10,14 @@
 [[projects]]
   name = "github.com/computes/go-ipld-polymorph"
   packages = ["."]
-  revision = "52d982c39f76f0d16fa81793d32b9b7f681584d0"
-  version = "v1.4.0"
+  revision = "f222f397e2947af407e95983b6cd28bb614c520c"
+  version = "v1.5.0"
 
 [[projects]]
   name = "github.com/computes/go-sdk"
   packages = [
     "pkg/helpers/datasets",
     "pkg/helpers/ipfs",
-    "pkg/helpers/polymorph",
     "pkg/helpers/tasks",
     "pkg/types"
   ]
@@ -43,6 +42,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "8bf08290e5165a1c40bf621c05f3b55e4c035cec52dd1cc4e773c9b240332635"
+  inputs-digest = "602e4fe013c0c7fe4393ef05bbbc198b6a9fe7171235ca1676e60a59104ae71f"
   solver-name = "gps-cdcl"
   solver-version = 1

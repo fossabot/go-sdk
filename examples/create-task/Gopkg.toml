@@ -26,7 +26,11 @@
 
 [[constraint]]
   name = "github.com/computes/go-sdk"
-  version = "2.3.0"
+  version = "3.0.0"
+
+[[constraint]]
+  name = "github.com/computes/ipfs-http-api"
+  version = "7.3.0"
 
 [prune]
   go-tests = true

@@ -4,9 +4,9 @@ import (
 	"fmt"
 
 	POLYMORPH "github.com/computes/go-ipld-polymorph"
+	DAG "github.com/computes/ipfs-http-api/dag"
 
 	"github.com/computes/go-sdk/pkg/helpers/datasets"
-	IPFSHELPER "github.com/computes/go-sdk/pkg/helpers/ipfs"
 	"github.com/computes/go-sdk/pkg/types"
 )
 
@@ -104,7 +104,7 @@ func (j *Job) makeSplitTaskDefinition() error {
 }
 
 func (j *Job) storeSplitTaskDefinition() error {
-	cid, err := IPFSHELPER.StoreInterfaceToDAG(j.IPFSURL, j.SplitTaskDefinition)
+	cid, err := DAG.PutInterface(j.IPFSURL, j.SplitTaskDefinition)
 	if err != nil {
 		return err
 	}
@@ -124,7 +124,7 @@ func (j *Job) makeSplitTaskDefinitionPolymorph() error {
 }
 
 func (j *Job) storeSplitTask() error {
-	cid, err := IPFSHELPER.StoreInterfaceToDAG(j.IPFSURL, j.SplitTask)
+	cid, err := DAG.PutInterface(j.IPFSURL, j.SplitTask)
 	if err != nil {
 		return err
 	}

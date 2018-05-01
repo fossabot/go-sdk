@@ -8,9 +8,9 @@ import (
 
 	POLYMORPH "github.com/computes/go-ipld-polymorph"
 	"github.com/computes/go-sdk/pkg/helpers/datasets"
-	IPFSHELPER "github.com/computes/go-sdk/pkg/helpers/ipfs"
 	"github.com/computes/go-sdk/pkg/helpers/tasks"
 	"github.com/computes/go-sdk/pkg/types"
+	DAG "github.com/computes/ipfs-http-api/dag"
 )
 
 func main() {
@@ -95,7 +95,7 @@ func main() {
 	}
 
 	// Add Task To DAG
-	hash, err := IPFSHELPER.StoreInterfaceToDAG(ipfsURL, task)
+	hash, err := DAG.PutInterface(ipfsURL, task)
 	if err != nil {
 		log.Fatal(err)
 	}

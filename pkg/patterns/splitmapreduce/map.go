@@ -4,8 +4,8 @@ import (
 	"fmt"
 
 	POLYMORPH "github.com/computes/go-ipld-polymorph"
+  DAG "github.com/computes/ipfs-http-api/dag"
 
-	IPFSHELPER "github.com/computes/go-sdk/pkg/helpers/ipfs"
 	"github.com/computes/go-sdk/pkg/types"
 )
 
@@ -70,7 +70,7 @@ func (j *Job) makeMapTaskDefinition() error {
 }
 
 func (j *Job) storeMapTaskDefinition() error {
-	cid, err := IPFSHELPER.StoreInterfaceToDAG(j.IPFSURL, j.MapTaskDefinition)
+	cid, err := DAG.PutInterface(j.IPFSURL, j.MapTaskDefinition)
 	if err != nil {
 		return err
 	}

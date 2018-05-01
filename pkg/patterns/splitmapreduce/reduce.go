@@ -1,8 +1,8 @@
 package splitmapreduce
 
 import (
-	IPFSHELPER "github.com/computes/go-sdk/pkg/helpers/ipfs"
 	"github.com/computes/go-sdk/pkg/types"
+	DAG "github.com/computes/ipfs-http-api/dag"
 )
 
 func (j *Job) createReduceTaskDefinition() error {
@@ -47,7 +47,7 @@ func (j *Job) makeReduceTaskDefinition() error {
 }
 
 func (j *Job) storeReduceTaskDefinition() error {
-	cid, err := IPFSHELPER.StoreInterfaceToDAG(j.IPFSURL, j.ReduceTaskDefinition)
+	cid, err := DAG.PutInterface(j.IPFSURL, j.ReduceTaskDefinition)
 	if err != nil {
 		return err
 	}

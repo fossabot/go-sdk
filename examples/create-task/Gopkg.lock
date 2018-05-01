@@ -17,12 +17,11 @@
   name = "github.com/computes/go-sdk"
   packages = [
     "pkg/helpers/datasets",
-    "pkg/helpers/ipfs",
     "pkg/helpers/tasks",
     "pkg/types"
   ]
-  revision = "a2b7fe05cac2dd955f5f890b8605479658d2191b"
-  version = "v2.3.0"
+  revision = "2915ed2b9383c342398d28e0df10c22809b94d95"
+  version = "v3.0.0"
 
 [[projects]]
   name = "github.com/computes/ipfs-http-api"
@@ -30,8 +29,8 @@
     "dag",
     "http"
   ]
-  revision = "7478904f9e018113142ee5320df6a59bdcc3a0a7"
-  version = "v7.2.1"
+  revision = "b45f9b87a478d0b9d91a7777dbe5b41adfd03f33"
+  version = "v7.3.0"
 
 [[projects]]
   name = "github.com/google/uuid"
@@ -42,6 +41,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "602e4fe013c0c7fe4393ef05bbbc198b6a9fe7171235ca1676e60a59104ae71f"
+  inputs-digest = "1628cfaf23a36cf9247356873d6ba25002c3f23a3f5a40a04c1a94e4504bbd7e"
   solver-name = "gps-cdcl"
   solver-version = 1

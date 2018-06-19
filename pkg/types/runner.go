@@ -2,10 +2,13 @@ package types
 
 import (
 	"encoding/json"
+
+	POLYMORPH "github.com/computes/go-ipld-polymorph"
 )
 
 // Runner represents how a task should run
 type Runner struct {
-	Metadata json.RawMessage `json:"metadata"`
-	Type     string          `json:"type"`
+	Type     string               `json:"type"`
+	Manifest *POLYMORPH.Polymorph `json:"manifest"`
+	Metadata json.RawMessage      `json:"metadata,omitempty"`
 }

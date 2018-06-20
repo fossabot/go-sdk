@@ -6,7 +6,8 @@ import (
 
 // TaskDefinition represents a task definition
 type TaskDefinition struct {
-	Conditions []*POLYMORPH.Polymorph `json:"conditions,omitempty"`
-	Result     *POLYMORPH.Polymorph   `json:"result"`
-	Runner     *POLYMORPH.Polymorph   `json:"runner"`
+	Conditions  []*POLYMORPH.Polymorph `json:"conditions,omitempty"`
+	Constraints []*POLYMORPH.Polymorph `json:"constraints,omitempty"`
+	Result      *POLYMORPH.Polymorph   `json:"result"`
+	Runner      *POLYMORPH.Polymorph   `json:"runner"`
 }
